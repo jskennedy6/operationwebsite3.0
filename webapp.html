@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesla Name Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .app-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #007BFF;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1>Tesla Name Generator</h1>
+        <p>Tell us a little about your Tesla, and we'll suggest a name for it!</p>
+        <form id="car-name-form">
+            <label for="car-type">Type of car:</label>
+            <select id="car-type" required>
+                <option value="">--Choose an option--</option>
+                <option value="Sporty">Sporty</option>
+                <option value="Classic">Classic</option>
+                <option value="Cute">Cute</option>
+                <option value="Rugged">Rugged</option>
+            </select>
+
+            <label for="color">Car color:</label>
+            <input type="text" id="color" placeholder="e.g., Red, Black, Blue" required>
+
+            <label for="gender">Car's personality:</label>
+            <select id="gender" required>
+                <option value="">--Choose an option--</option>
+                <option value="Male">Masculine</option>
+                <option value="Female">Feminine</option>
+                <option value="Neutral">Neutral</option>
+            </select>
+
+            <button type="submit">Generate Name</button>
+        </form>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const carNames = {
+            Sporty: ["Flash", "Blaze", "Speedy", "Nitro"],
+            Classic: ["Old Faithful", "Vintage", "Goldie", "Luxe"],
+            Cute: ["Bubbles", "Peaches", "Sprinkle", "Daisy"],
+            Rugged: ["Tank", "Rocky", "Beast", "Crusher"]
+        };
+
+        const genderModifiers = {
+            Male: ["King", "Sir", "Mister"],
+            Female: ["Queen", "Lady", "Miss"],
+            Neutral: ["Star", "Ace", "Rider"]
+        };
+
+        document.getElementById("car-name-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const carType = document.getElementById("car-type").value;
+            const color = document.getElementById("color").value.trim();
+            const gender = document.getElementById("gender").value;
+
+            if (carType && color && gender) {
+                // Randomly pick a base name and a modifier
+                const baseName = carNames[carType][Math.floor(Math.random() * carNames[carType].length)];
+                const modifier = genderModifiers[gender][Math.floor(Math.random() * genderModifiers[gender].length)];
+                const name = `${modifier} ${color} ${baseName}`;
+                document.getElementById("result").textContent = `Your car's name is: ${name}`;
+            } else {
+                document.getElementById("result").textContent = "Please fill out all fields.";
+            }
+        });
+    </script>
+</body>
+</html>
